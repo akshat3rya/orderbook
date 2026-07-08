@@ -1,0 +1,50 @@
+#pragma once
+#include <cstdint>
+#include <map>
+#include <unordered_map>
+#include <functional>
+#include <optional>
+#include "order.hpp"
+#include "price_level.hpp"
+
+enum class ModifyResult { OK, NOT_FOUND, QTY_MUST_DECREASE, RESULTED_IN_CANCEL };
+
+class OrderBook {
+public:
+    ~OrderBook();
+
+    // Insert a brand new resting order. Returns false if id already exists.
+    bool insert(uint64_t id, Side side, int64_t price, int64_t qty);
+
+    // Cancel a live order by id. Returns false if not found.
+    bool cancel(uint64_t id);
+
+    // In-place quantity DECREASE only (increasing qty must re-queue in a
+    // real exchange, so that's modeled as cancel+insert, not this call).
+    // newQty <= 0 cancels the order outright.
+    ModifyResult modify(uint64_t id, int64_t newQty);
+
+    bool contains(uint64_t id) const { return orderIndex_.find(id) != orderIndex_.end(); }
+    size_t liveOrderCount() const { return orderIndex_.size(); }
+
+    // Best bid / ask price, if book side is non-empty.
+    std::optional<int64_t> bestBid() const;
+    std::optional<int64_t> bestAsk() const;
+
+    // Debug/CLI dump of the book, top `depth` levels each side.
+    void print(int depth = 10) const;
+
+    // Access for the matching engine (Day 2) — walks levels in priority order.
+    std::map<int64_t, PriceLevel*, std::greater<int64_t>>& bids() { return bids_; }
+    std::map<int64_t, PriceLevel*, std::less<int64_t>>& asks() { return asks_; }
+
+private:
+    // Bids: highest price first. Asks: lowest price first.
+    std::map<int64_t, PriceLevel*, std::greater<int64_t>> bids_;
+    std::map<int64_t, PriceLevel*, std::less<int64_t>> asks_;
+    std::unordered_map<uint64_t, Order*> orderIndex_;
+    uint64_t seqCounter_ = 0;
+
+    PriceLevel* getOrCreateLevel(Side side, int64_t price);
+    void removeLevelIfEmpty(Side side, PriceLevel* level);
+};
