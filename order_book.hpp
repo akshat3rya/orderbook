@@ -24,6 +24,14 @@ public:
     // newQty <= 0 cancels the order outright.
     ModifyResult modify(uint64_t id, int64_t newQty);
 
+    // Fill part or all of a resting order in place (used by the matching
+    // engine while walking the book). If the fill exhausts the order it is
+    // fully removed (unlinked, erased from the index, level cleaned up if
+    // now empty) — same cleanup path as cancel(). `order` must be a live
+    // pointer currently owned by this book (e.g. from level->head while
+    // walking bids()/asks()).
+    void applyFill(Order* order, int64_t fillQty);
+
     bool contains(uint64_t id) const { return orderIndex_.find(id) != orderIndex_.end(); }
     size_t liveOrderCount() const { return orderIndex_.size(); }
 

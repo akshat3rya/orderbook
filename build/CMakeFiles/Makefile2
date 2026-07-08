@@ -54,20 +54,22 @@ RM = /snap/cmake/1550/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/akshat/akshat2026/dev/ss
+CMAKE_SOURCE_DIR = /home/akshat/akshat2026/final-git-box/ss
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/akshat/akshat2026/dev/ss/build
+CMAKE_BINARY_DIR = /home/akshat/akshat2026/final-git-box/ss/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
 all: CMakeFiles/orderbook.dir/all
+all: CMakeFiles/run_tests.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/orderbook.dir/codegen
+codegen: CMakeFiles/run_tests.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -76,6 +78,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/orderbook.dir/clean
+clean: CMakeFiles/run_tests.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -85,14 +88,14 @@ clean: CMakeFiles/orderbook.dir/clean
 CMakeFiles/orderbook.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/akshat/akshat2026/dev/ss/build/CMakeFiles --progress-num=1,2,3 "Built target orderbook"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=1,2,3,4 "Built target orderbook"
 .PHONY : CMakeFiles/orderbook.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/orderbook.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/dev/ss/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/orderbook.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/dev/ss/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles 0
 .PHONY : CMakeFiles/orderbook.dir/rule
 
 # Convenience name for target.
@@ -102,13 +105,45 @@ orderbook: CMakeFiles/orderbook.dir/rule
 # codegen rule for target.
 CMakeFiles/orderbook.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/akshat/akshat2026/dev/ss/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target orderbook"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target orderbook"
 .PHONY : CMakeFiles/orderbook.dir/codegen
 
 # clean rule for target.
 CMakeFiles/orderbook.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/clean
 .PHONY : CMakeFiles/orderbook.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/run_tests.dir
+
+# All Build rule for target.
+CMakeFiles/run_tests.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=5,6,7,8 "Built target run_tests"
+.PHONY : CMakeFiles/run_tests.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/run_tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/run_tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles 0
+.PHONY : CMakeFiles/run_tests.dir/rule
+
+# Convenience name for target.
+run_tests: CMakeFiles/run_tests.dir/rule
+.PHONY : run_tests
+
+# codegen rule for target.
+CMakeFiles/run_tests.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=5,6,7,8 "Finished codegen for target run_tests"
+.PHONY : CMakeFiles/run_tests.dir/codegen
+
+# clean rule for target.
+CMakeFiles/run_tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/clean
+.PHONY : CMakeFiles/run_tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

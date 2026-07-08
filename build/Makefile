@@ -57,13 +57,23 @@ RM = /snap/cmake/1550/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/akshat/akshat2026/dev/ss
+CMAKE_SOURCE_DIR = /home/akshat/akshat2026/final-git-box/ss
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/akshat/akshat2026/dev/ss/build
+CMAKE_BINARY_DIR = /home/akshat/akshat2026/final-git-box/ss/build
 
 #=============================================================================
 # Targets provided globally by CMake.
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/snap/cmake/1550/bin/ctest $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -87,9 +97,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/dev/ss/build/CMakeFiles /home/akshat/akshat2026/dev/ss/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles /home/akshat/akshat2026/final-git-box/ss/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/dev/ss/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,6 +139,19 @@ orderbook/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/build
 .PHONY : orderbook/fast
 
+#=============================================================================
+# Target rules for targets named run_tests
+
+# Build rule for target.
+run_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_tests
+.PHONY : run_tests
+
+# fast build rule for target.
+run_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
+.PHONY : run_tests/fast
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -153,12 +176,40 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+matching_engine.o: matching_engine.cpp.o
+.PHONY : matching_engine.o
+
+# target to build an object file
+matching_engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/matching_engine.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/matching_engine.cpp.o
+.PHONY : matching_engine.cpp.o
+
+matching_engine.i: matching_engine.cpp.i
+.PHONY : matching_engine.i
+
+# target to preprocess a source file
+matching_engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/matching_engine.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/matching_engine.cpp.i
+.PHONY : matching_engine.cpp.i
+
+matching_engine.s: matching_engine.cpp.s
+.PHONY : matching_engine.s
+
+# target to generate assembly for a file
+matching_engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/matching_engine.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/matching_engine.cpp.s
+.PHONY : matching_engine.cpp.s
+
 order_book.o: order_book.cpp.o
 .PHONY : order_book.o
 
 # target to build an object file
 order_book.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/order_book.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/order_book.cpp.o
 .PHONY : order_book.cpp.o
 
 order_book.i: order_book.cpp.i
@@ -167,6 +218,7 @@ order_book.i: order_book.cpp.i
 # target to preprocess a source file
 order_book.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/order_book.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/order_book.cpp.i
 .PHONY : order_book.cpp.i
 
 order_book.s: order_book.cpp.s
@@ -175,7 +227,32 @@ order_book.s: order_book.cpp.s
 # target to generate assembly for a file
 order_book.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/orderbook.dir/build.make CMakeFiles/orderbook.dir/order_book.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/order_book.cpp.s
 .PHONY : order_book.cpp.s
+
+tests.o: tests.cpp.o
+.PHONY : tests.o
+
+# target to build an object file
+tests.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests.cpp.o
+.PHONY : tests.cpp.o
+
+tests.i: tests.cpp.i
+.PHONY : tests.i
+
+# target to preprocess a source file
+tests.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests.cpp.i
+.PHONY : tests.cpp.i
+
+tests.s: tests.cpp.s
+.PHONY : tests.s
+
+# target to generate assembly for a file
+tests.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/tests.cpp.s
+.PHONY : tests.cpp.s
 
 # Help Target
 help:
@@ -185,13 +262,21 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... orderbook"
+	@echo "... run_tests"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... matching_engine.o"
+	@echo "... matching_engine.i"
+	@echo "... matching_engine.s"
 	@echo "... order_book.o"
 	@echo "... order_book.i"
 	@echo "... order_book.s"
+	@echo "... tests.o"
+	@echo "... tests.i"
+	@echo "... tests.s"
 .PHONY : help
 
 

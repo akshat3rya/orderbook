@@ -53,10 +53,10 @@ RM = /snap/cmake/1550/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/akshat/akshat2026/dev/ss
+CMAKE_SOURCE_DIR = /home/akshat/akshat2026/final-git-box/ss
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/akshat/akshat2026/dev/ss/build
+CMAKE_BINARY_DIR = /home/akshat/akshat2026/final-git-box/ss/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/orderbook.dir/depend.make
@@ -73,46 +73,62 @@ CMakeFiles/orderbook.dir/codegen:
 .PHONY : CMakeFiles/orderbook.dir/codegen
 
 CMakeFiles/orderbook.dir/main.cpp.o: CMakeFiles/orderbook.dir/flags.make
-CMakeFiles/orderbook.dir/main.cpp.o: /home/akshat/akshat2026/dev/ss/main.cpp
+CMakeFiles/orderbook.dir/main.cpp.o: /home/akshat/akshat2026/final-git-box/ss/main.cpp
 CMakeFiles/orderbook.dir/main.cpp.o: CMakeFiles/orderbook.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/akshat/akshat2026/dev/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/orderbook.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/orderbook.dir/main.cpp.o -MF CMakeFiles/orderbook.dir/main.cpp.o.d -o CMakeFiles/orderbook.dir/main.cpp.o -c /home/akshat/akshat2026/dev/ss/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/orderbook.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/orderbook.dir/main.cpp.o -MF CMakeFiles/orderbook.dir/main.cpp.o.d -o CMakeFiles/orderbook.dir/main.cpp.o -c /home/akshat/akshat2026/final-git-box/ss/main.cpp
 
 CMakeFiles/orderbook.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/orderbook.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/akshat/akshat2026/dev/ss/main.cpp > CMakeFiles/orderbook.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/akshat/akshat2026/final-git-box/ss/main.cpp > CMakeFiles/orderbook.dir/main.cpp.i
 
 CMakeFiles/orderbook.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/orderbook.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/akshat/akshat2026/dev/ss/main.cpp -o CMakeFiles/orderbook.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/akshat/akshat2026/final-git-box/ss/main.cpp -o CMakeFiles/orderbook.dir/main.cpp.s
 
 CMakeFiles/orderbook.dir/order_book.cpp.o: CMakeFiles/orderbook.dir/flags.make
-CMakeFiles/orderbook.dir/order_book.cpp.o: /home/akshat/akshat2026/dev/ss/order_book.cpp
+CMakeFiles/orderbook.dir/order_book.cpp.o: /home/akshat/akshat2026/final-git-box/ss/order_book.cpp
 CMakeFiles/orderbook.dir/order_book.cpp.o: CMakeFiles/orderbook.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/akshat/akshat2026/dev/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/orderbook.dir/order_book.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/orderbook.dir/order_book.cpp.o -MF CMakeFiles/orderbook.dir/order_book.cpp.o.d -o CMakeFiles/orderbook.dir/order_book.cpp.o -c /home/akshat/akshat2026/dev/ss/order_book.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/orderbook.dir/order_book.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/orderbook.dir/order_book.cpp.o -MF CMakeFiles/orderbook.dir/order_book.cpp.o.d -o CMakeFiles/orderbook.dir/order_book.cpp.o -c /home/akshat/akshat2026/final-git-box/ss/order_book.cpp
 
 CMakeFiles/orderbook.dir/order_book.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/orderbook.dir/order_book.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/akshat/akshat2026/dev/ss/order_book.cpp > CMakeFiles/orderbook.dir/order_book.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/akshat/akshat2026/final-git-box/ss/order_book.cpp > CMakeFiles/orderbook.dir/order_book.cpp.i
 
 CMakeFiles/orderbook.dir/order_book.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/orderbook.dir/order_book.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/akshat/akshat2026/dev/ss/order_book.cpp -o CMakeFiles/orderbook.dir/order_book.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/akshat/akshat2026/final-git-box/ss/order_book.cpp -o CMakeFiles/orderbook.dir/order_book.cpp.s
+
+CMakeFiles/orderbook.dir/matching_engine.cpp.o: CMakeFiles/orderbook.dir/flags.make
+CMakeFiles/orderbook.dir/matching_engine.cpp.o: /home/akshat/akshat2026/final-git-box/ss/matching_engine.cpp
+CMakeFiles/orderbook.dir/matching_engine.cpp.o: CMakeFiles/orderbook.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/orderbook.dir/matching_engine.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/orderbook.dir/matching_engine.cpp.o -MF CMakeFiles/orderbook.dir/matching_engine.cpp.o.d -o CMakeFiles/orderbook.dir/matching_engine.cpp.o -c /home/akshat/akshat2026/final-git-box/ss/matching_engine.cpp
+
+CMakeFiles/orderbook.dir/matching_engine.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/orderbook.dir/matching_engine.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/akshat/akshat2026/final-git-box/ss/matching_engine.cpp > CMakeFiles/orderbook.dir/matching_engine.cpp.i
+
+CMakeFiles/orderbook.dir/matching_engine.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/orderbook.dir/matching_engine.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/akshat/akshat2026/final-git-box/ss/matching_engine.cpp -o CMakeFiles/orderbook.dir/matching_engine.cpp.s
 
 # Object files for target orderbook
 orderbook_OBJECTS = \
 "CMakeFiles/orderbook.dir/main.cpp.o" \
-"CMakeFiles/orderbook.dir/order_book.cpp.o"
+"CMakeFiles/orderbook.dir/order_book.cpp.o" \
+"CMakeFiles/orderbook.dir/matching_engine.cpp.o"
 
 # External object files for target orderbook
 orderbook_EXTERNAL_OBJECTS =
 
 orderbook: CMakeFiles/orderbook.dir/main.cpp.o
 orderbook: CMakeFiles/orderbook.dir/order_book.cpp.o
+orderbook: CMakeFiles/orderbook.dir/matching_engine.cpp.o
 orderbook: CMakeFiles/orderbook.dir/build.make
 orderbook: CMakeFiles/orderbook.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/akshat/akshat2026/dev/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable orderbook"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable orderbook"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/orderbook.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -124,6 +140,6 @@ CMakeFiles/orderbook.dir/clean:
 .PHONY : CMakeFiles/orderbook.dir/clean
 
 CMakeFiles/orderbook.dir/depend:
-	cd /home/akshat/akshat2026/dev/ss/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/akshat/akshat2026/dev/ss /home/akshat/akshat2026/dev/ss /home/akshat/akshat2026/dev/ss/build /home/akshat/akshat2026/dev/ss/build /home/akshat/akshat2026/dev/ss/build/CMakeFiles/orderbook.dir/DependInfo.cmake "--color=$(COLOR)" orderbook
+	cd /home/akshat/akshat2026/final-git-box/ss/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/akshat/akshat2026/final-git-box/ss /home/akshat/akshat2026/final-git-box/ss /home/akshat/akshat2026/final-git-box/ss/build /home/akshat/akshat2026/final-git-box/ss/build /home/akshat/akshat2026/final-git-box/ss/build/CMakeFiles/orderbook.dir/DependInfo.cmake "--color=$(COLOR)" orderbook
 .PHONY : CMakeFiles/orderbook.dir/depend
 
