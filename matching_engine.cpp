@@ -4,15 +4,14 @@
 MatchResult MatchingEngine::submit(uint64_t id, Side side, OrderType type, int64_t price, int64_t qty) {
     MatchResult result;
 
-    if (qty <= 0 || book_.contains(id))
+    if (qty <= 0 || book_.contains(id)) {
         return result; // accepted stays false: reject (bad qty or duplicate id)
+    }
     result.accepted = true;
 
     int64_t remaining = qty;
-    if (side == Side::BUY)
-        matchBuy(id, type, price, remaining, result.trades);
-    else
-        matchSell(id, type, price, remaining, result.trades);
+    if (side == Side::BUY) matchBuy(id, type, price, remaining, result.trades);
+    else                    matchSell(id, type, price, remaining, result.trades);
 
     result.filledQty = qty - remaining;
     result.remainingQty = remaining;
@@ -28,14 +27,13 @@ MatchResult MatchingEngine::submit(uint64_t id, Side side, OrderType type, int64
     return result;
 }
 
-void MatchingEngine::matchBuy(uint64_t takerId, OrderType type, int64_t price, int64_t& remaining, std::vector<Trade>& trades) {
+void MatchingEngine::matchBuy(uint64_t takerId, OrderType type, int64_t price,
+                               int64_t& remaining, std::vector<Trade>& trades) {
     auto& asks = book_.asks(); // ascending price: best (lowest) ask first
     while (remaining > 0) {
         auto it = asks.begin();
-        if (it == asks.end())
-            break;                              // empty-book edge case
-        if (type == OrderType::LIMIT && it->first > price)
-            break;  // no more crossing levels
+        if (it == asks.end()) break;                              // empty-book edge case
+        if (type == OrderType::LIMIT && it->first > price) break;  // no more crossing levels
 
         PriceLevel* level = it->second;
         Order* resting = level->head; // oldest order at this price = time priority
@@ -50,14 +48,13 @@ void MatchingEngine::matchBuy(uint64_t takerId, OrderType type, int64_t price, i
     }
 }
 
-void MatchingEngine::matchSell(uint64_t takerId, OrderType type, int64_t price, int64_t& remaining, std::vector<Trade>& trades) {
+void MatchingEngine::matchSell(uint64_t takerId, OrderType type, int64_t price,
+                                int64_t& remaining, std::vector<Trade>& trades) {
     auto& bids = book_.bids(); // descending price: best (highest) bid first
     while (remaining > 0) {
         auto it = bids.begin();
-        if (it == bids.end())
-            break;
-        if (type == OrderType::LIMIT && it->first < price)
-            break;
+        if (it == bids.end()) break;
+        if (type == OrderType::LIMIT && it->first < price) break;
 
         PriceLevel* level = it->second;
         Order* resting = level->head;

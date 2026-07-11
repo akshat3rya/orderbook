@@ -31,6 +31,8 @@ private:
     OrderBook& book_;
     uint64_t tradeSeq_ = 0;
 
-    void matchBuy(uint64_t takerId, OrderType type, int64_t price, int64_t& remaining, std::vector<Trade>& trades);
-    void matchSell(uint64_t takerId, OrderType type, int64_t price, int64_t& remaining, std::vector<Trade>& trades);
+    void matchBuy(uint64_t takerId, OrderType type, int64_t price,
+                  int64_t& remaining, std::vector<Trade>& trades);
+    void matchSell(uint64_t takerId, OrderType type, int64_t price,
+                   int64_t& remaining, std::vector<Trade>& trades);
 };

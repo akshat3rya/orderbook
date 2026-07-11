@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/run_protocol_tests.dir/test_protocol.cpp.o CMakeFiles/run_protocol_tests.dir/net_io.cpp.o -o run_protocol_tests

@@ -9,9 +9,20 @@
 
 enum class ModifyResult { OK, NOT_FOUND, QTY_MUST_DECREASE, RESULTED_IN_CANCEL };
 
+// Fires whenever a price level's total resting quantity changes for any
+// reason (insert, cancel, modify, or a fill) — newTotalQty == 0 means the
+// level was fully removed. This is the single source of truth for "book
+// delta" market data events (Day 5): only OrderBook knows, at the exact
+// moment of mutation, whether a level survived a partial consumption or
+// was wiped out entirely — that can't be reliably reconstructed from
+// outside afterward (the PriceLevel may already be deleted).
+using LevelChangeListener = std::function<void(Side side, int64_t price, int64_t newTotalQty)>;
+
 class OrderBook {
 public:
     ~OrderBook();
+
+    void setLevelChangeListener(LevelChangeListener listener) { levelChangeListener_ = std::move(listener); }
 
     // Insert a brand new resting order. Returns false if id already exists.
     bool insert(uint64_t id, Side side, int64_t price, int64_t qty);
@@ -52,7 +63,11 @@ private:
     std::map<int64_t, PriceLevel*, std::less<int64_t>> asks_;
     std::unordered_map<uint64_t, Order*> orderIndex_;
     uint64_t seqCounter_ = 0;
+    LevelChangeListener levelChangeListener_ = nullptr;
 
     PriceLevel* getOrCreateLevel(Side side, int64_t price);
     void removeLevelIfEmpty(Side side, PriceLevel* level);
+    void notifyLevelChanged(Side side, int64_t price, int64_t newTotalQty) {
+        if (levelChangeListener_) levelChangeListener_(side, price, newTotalQty);
+    }
 };

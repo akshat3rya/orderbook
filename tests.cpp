@@ -3,6 +3,8 @@
 // uses CHECK(), then register it in main()'s RUN() list.
 #include <iostream>
 #include <string>
+#include <tuple>
+#include <vector>
 #include "order_book.hpp"
 #include "matching_engine.hpp"
 
@@ -156,6 +158,48 @@ static void test_empty_book_edge_cases() {
 }
 
 // ---------------------------------------------------------------------
+// 6. Level-change listener (Day 5): fires with the exact post-mutation
+//    totalQty for every insert/cancel/modify, including the tricky case
+//    of a level that survives because a second order remains on it.
+// ---------------------------------------------------------------------
+static void test_level_change_listener_fires_correctly() {
+    OrderBook book;
+    std::vector<std::tuple<Side, int64_t, int64_t>> events;
+    book.setLevelChangeListener([&](Side s, int64_t p, int64_t q) { events.emplace_back(s, p, q); });
+
+    book.insert(1, Side::SELL, 100, 30);   // level created: 30
+    book.insert(2, Side::SELL, 100, 20);   // same level: 50
+    book.cancel(1);                         // order 2 remains: 20
+    book.modify(2, 5);                      // in-place decrease: 5
+    book.cancel(2);                         // level now empty: 0
+
+    CHECK(events.size() == 5);
+    CHECK(events[0] == std::make_tuple(Side::SELL, 100, 30));
+    CHECK(events[1] == std::make_tuple(Side::SELL, 100, 50));
+    CHECK(events[2] == std::make_tuple(Side::SELL, 100, 20));
+    CHECK(events[3] == std::make_tuple(Side::SELL, 100, 5));
+    CHECK(events[4] == std::make_tuple(Side::SELL, 100, 0));
+}
+
+// ---------------------------------------------------------------------
+// 7. The listener must also fire correctly when a level is mutated via
+//    the matching engine's applyFill path, not just direct book calls.
+// ---------------------------------------------------------------------
+static void test_matching_triggers_level_change_events() {
+    OrderBook book;
+    MatchingEngine engine(book);
+    std::vector<std::tuple<Side, int64_t, int64_t>> events;
+    book.setLevelChangeListener([&](Side s, int64_t p, int64_t q) { events.emplace_back(s, p, q); });
+
+    engine.submit(1, Side::SELL, OrderType::LIMIT, 100, 30); // rests: event (SELL,100,30)
+    engine.submit(2, Side::BUY, OrderType::LIMIT, 100, 30);  // full match, consumes the level: event (SELL,100,0)
+
+    CHECK(events.size() == 2);
+    CHECK(events[0] == std::make_tuple(Side::SELL, 100, 30));
+    CHECK(events[1] == std::make_tuple(Side::SELL, 100, 0));
+}
+
+// ---------------------------------------------------------------------
 #define RUN(fn) do { \
     std::cout << "RUN  " #fn "\n"; \
     int before = g_failures; \
@@ -169,6 +213,8 @@ int main() {
     RUN(test_modify_keeps_priority);
     RUN(test_multi_level_sweep);
     RUN(test_empty_book_edge_cases);
+    RUN(test_level_change_listener_fires_correctly);
+    RUN(test_matching_triggers_level_change_events);
 
     std::cout << "\n" << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     if (g_failures > 0) {

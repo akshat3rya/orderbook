@@ -43,9 +43,10 @@ bool OrderBook::insert(uint64_t id, Side side, int64_t price, int64_t qty) {
     order->seq = seqCounter_++;
 
     PriceLevel* level = getOrCreateLevel(side, price);
-    level->pushBack(order); 
+    level->pushBack(order); // sets order->level, appends to tail (FIFO = time priority)
 
     orderIndex_.emplace(id, order);
+    notifyLevelChanged(side, price, level->totalQty);
     return true;
 }
 
@@ -56,12 +57,15 @@ bool OrderBook::cancel(uint64_t id) {
     Order* order = it->second;
     PriceLevel* level = order->level;
     Side side = order->side;
+    int64_t price = level->price;
 
-    level->unlink(order);       
+    level->unlink(order);       // O(1): no scan needed
+    int64_t newLevelQty = level->totalQty; // capture before removeLevelIfEmpty can delete `level`
     removeLevelIfEmpty(side, level);
 
     orderIndex_.erase(it);
     delete order;
+    notifyLevelChanged(side, price, newLevelQty);
     return true;
 }
 
@@ -75,11 +79,19 @@ ModifyResult OrderBook::modify(uint64_t id, int64_t newQty) {
         cancel(id);
         return ModifyResult::RESULTED_IN_CANCEL;
     }
-    if (newQty >= order->qty) return ModifyResult::QTY_MUST_DECREASE;
+    if (newQty >= order->qty) {
+        // Increasing qty would need to re-queue at the back to be fair to
+        // resting orders — that's a cancel+insert, not this in-place path.
+        return ModifyResult::QTY_MUST_DECREASE;
+    }
 
+    // In-place decrease: qty shrinks, order KEEPS its spot in the DLL
+    // (this is the "modify-loses-priority" case to test the *opposite* of
+    // on Day 2 — a qty *increase* would need to move to the back).
     int64_t delta = order->qty - newQty;
     order->qty = newQty;
     order->level->totalQty -= delta;
+    notifyLevelChanged(order->side, order->level->price, order->level->totalQty);
 
     return ModifyResult::OK;
 }
@@ -87,9 +99,11 @@ ModifyResult OrderBook::modify(uint64_t id, int64_t newQty) {
 void OrderBook::applyFill(Order* order, int64_t fillQty) {
     PriceLevel* level = order->level;
     Side side = order->side;
+    int64_t price = level->price;
 
     order->qty -= fillQty;
     level->totalQty -= fillQty;
+    int64_t newLevelQty = level->totalQty; // capture before removeLevelIfEmpty can delete `level`
 
     if (order->qty <= 0) {
         level->unlink(order);
@@ -97,6 +111,8 @@ void OrderBook::applyFill(Order* order, int64_t fillQty) {
         delete order;
         removeLevelIfEmpty(side, level);
     }
+
+    notifyLevelChanged(side, price, newLevelQty);
 }
 
 std::optional<int64_t> OrderBook::bestBid() const {
@@ -120,16 +136,22 @@ void OrderBook::print(int depth) const {
         std::string askStr = "";
 
         if (bIt != bids_.end()) {
-            bidStr = std::to_string(bIt->second->price) + " x " + std::to_string(bIt->second->totalQty) + " (" + std::to_string(bIt->second->orderCount) + ")";
+            bidStr = std::to_string(bIt->second->price) + " x " +
+                      std::to_string(bIt->second->totalQty) + " (" +
+                      std::to_string(bIt->second->orderCount) + ")";
             ++bIt;
         }
         if (aIt != asks_.end()) {
-            askStr = std::to_string(aIt->second->price) + " x " + std::to_string(aIt->second->totalQty) + " (" + std::to_string(aIt->second->orderCount) + ")";
+            askStr = std::to_string(aIt->second->price) + " x " +
+                      std::to_string(aIt->second->totalQty) + " (" +
+                      std::to_string(aIt->second->orderCount) + ")";
             ++aIt;
         }
 
-        std::cout << std::left << std::setw(24) << bidStr << std::setw(24) << askStr << "\n";
+        std::cout << std::left << std::setw(24) << bidStr
+                   << std::setw(24) << askStr << "\n";
     }
-    if (bids_.empty() && asks_.empty()) 
+    if (bids_.empty() && asks_.empty()) {
         std::cout << "(empty book)\n";
+    }
 }
